@@ -10,8 +10,8 @@ then scores the overall risk and renders an HTML report.
 > are authorized to review.
 
 Built by Nitika Kumari (offensive security · AI/LLM & MCP security). Companion to my
-[damn-vulnerable-mcp](https://github.com/singhanushaka59/damn-vulnerable-mcp) lab and
-[prompt-injection-harness](https://github.com/singhanushaka59/prompt-injection-harness).
+[damn-vulnerable-mcp](https://github.com/nitikasec/damn-vulnerable-mcp) lab and
+[prompt-injection-harness](https://github.com/nitikasec/prompt-injection-harness).
 
 ## Why
 MCP wires LLM agents to tools, files, and remote servers — a real, under-reviewed attack
