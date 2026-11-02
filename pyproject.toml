@@ -1,0 +1,17 @@
+[project]
+name = "agentshield"
+version = "0.1.0"
+description = "AI Agent & MCP Security Assessment Toolkit — static analyzer for MCP configurations"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []                     # standard library only
+license = { text = "MIT" }
+authors = [{ name = "Nitika Kumari" }]
+keywords = ["mcp", "ai-security", "llm-security", "security", "static-analysis"]
+
+[project.scripts]
+agentshield = "agentshield.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

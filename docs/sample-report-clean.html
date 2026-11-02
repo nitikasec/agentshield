@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8">
+<title>AgentShield Report</title><style>
+*{font-family:-apple-system,Arial,sans-serif;box-sizing:border-box}
+body{margin:0;background:#f6f8fa;color:#1a1a1a}
+.wrap{max-width:900px;margin:0 auto;padding:24px}
+h1{font-size:20px;margin:0 0 4px}
+.score{font-size:40px;font-weight:700;color:#1a73e8}
+.sub{color:#57606a;font-size:13px;margin-bottom:18px}
+.finding{background:#fff;border:1px solid #d0d7de;border-radius:10px;padding:12px 14px;margin:10px 0}
+.fhead{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.sev{color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:5px}
+.conf{font-size:12px;font-weight:600} .cat{font-size:11px;color:#57606a;background:#eef1f4;padding:2px 6px;border-radius:5px}
+.meta code{background:#eef1f4;padding:1px 5px;border-radius:4px;font-size:12px}
+.ev{color:#57606a;font-size:13px;margin:4px 0} .fix{font-size:13px;margin-top:4px}
+.note{color:#57606a;font-size:12px;margin-top:16px}
+</style></head><body><div class="wrap">
+<h1>🛡️ AgentShield — MCP Config Security Report</h1>
+<div class="sub">samples/clean_mcp_config.json · 2026-11-02 05:58</div>
+<div class="score">5/100 · LOW</div>
+<div class="sub">3 server(s) · 0 confirmed ·
+1 indicator(s) needing review</div>
+
+        <div class="finding">
+          <div class="fhead">
+            <span class="sev" style="background:#e37400">MEDIUM</span>
+            <span class="conf" style="color:#e37400">? indicator</span>
+            <span class="cat">secret-exposure</span>
+            <b>Sensitive host variable &#x27;ANTHROPIC_API_KEY&#x27; passed to server &#x27;notes&#x27;</b>
+          </div>
+          <div class="meta"><code>mcpServers.notes.env.ANTHROPIC_API_KEY</code></div>
+          <div class="ev">evidence: ANTHROPIC_API_KEY</div>
+          <div class="fix">fix: Only pass credentials a server truly needs; a compromised or malicious third-party server inherits whatever you hand it.</div>
+        </div>
+<div class="note">⚠️ "indicator" findings are heuristic and must be manually confirmed.
+AgentShield performs static analysis only; it does not execute the config or any server.</div>
+</div></body></html>

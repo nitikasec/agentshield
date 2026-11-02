@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.DS_Store
+# generated reports / local configs under review (never commit a client's real config)
+*.report.html
+report.html
+report.json
+scans/

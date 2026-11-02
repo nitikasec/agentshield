@@ -1,0 +1,21 @@
+{
+  "_comment": "A reasonably-hardened MCP config fixture (no confirmed issues expected).",
+  "mcpServers": {
+    "notes": {
+      "command": "npx",
+      "args": ["-y", "@acme/notes-mcp@1.4.2"],
+      "env": {
+        "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
+        "DB_PASSWORD": "${DB_PASSWORD}"
+      }
+    },
+    "files": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem@0.6.2", "/Users/me/projects/demo"]
+    },
+    "remote-tools": {
+      "url": "https://tools.example.com/mcp",
+      "headers": {"Authorization": "Bearer ${TOOLS_TOKEN}"}
+    }
+  }
+}

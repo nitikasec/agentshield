@@ -1,0 +1,3 @@
+# AgentShield MVP uses the Python standard library only — no third-party deps.
+# (Keeps it light on an 8 GB machine and reduces supply-chain surface.)
+# Future live-probing features may add: mcp, httpx  (optional extras, not required for static scan)
