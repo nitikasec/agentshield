@@ -10,7 +10,7 @@ then scores the overall risk and renders an HTML report.
 > are authorized to review.
 
 Built by Nitika Kumari (offensive security · AI/LLM & MCP security). Companion to my
-[damn-vulnerable-mcp](https://github.com/nitikasec/damn-vulnerable-mcp) lab and
+[Agent Heist](https://github.com/nitikasec/agent-heist) lab and
 [prompt-injection-harness](https://github.com/nitikasec/prompt-injection-harness).
 
 ## Why
@@ -32,13 +32,18 @@ git clone <this repo> && cd agentshield
 
 ## Usage
 ```bash
-# scan a config, print a report, write HTML + JSON
+# A) scan an MCP CONFIG (secrets, transport, agency, poisoning, supply-chain)
 python -m agentshield scan samples/vulnerable_mcp_config.json --html report.html --json report.json
 
 # scan your real Claude Desktop / Cursor config (read-only)
 python -m agentshield scan ~/Library/Application\ Support/Claude/claude_desktop_config.json
+
+# B) scan an MCP SERVER'S SOURCE CODE (the high-impact bug classes)
+python -m agentshield scan-source ./path/to/mcp-server            # a directory
+python -m agentshield scan-source samples/source/vulnerable_server.py   # a single file
 ```
-Exit code is non-zero if any **confirmed** finding is present (handy in CI).
+Exit codes (handy in CI): `scan` is non-zero on any **confirmed** finding; `scan-source` is
+non-zero on any **CRITICAL/HIGH** indicator.
 
 ## What it checks (MVP)
 | Check | Category | Confidence |
@@ -55,9 +60,27 @@ Exit code is non-zero if any **confirmed** finding is present (handy in CI).
 
 Risk score (0–100) weights severity × confidence; indicators count at half weight.
 
+## What it checks — SOURCE CODE (`scan-source`, new in v0.2)
+Static review of an MCP server's source (`.py .js .ts .go …`) for the vulnerability classes that
+actually ship in real MCP servers — codified from hand-auditing open-source servers. Source matches
+are always **indicator** (static analysis can't prove the input is attacker-reachable); severity
+reflects impact *if* exploitable.
+
+| Check | Category | Severity |
+|-------|----------|----------|
+| OS command injection — shell string built from input (`exec`/`os.system`/interpolation) | command-injection | CRITICAL |
+| `subprocess(..., shell=True)` / child process spawned with a shell | command-injection | HIGH |
+| Prefix-match path check (`startswith`/`startsWith` with no separator boundary) → sandbox escape | path-traversal | HIGH |
+| Server-side request to a non-constant URL (fetch/requests/axios) → SSRF | ssrf | HIGH |
+| Token / credential passthrough (forwards an inbound `Authorization`) → confused deputy | token-passthrough | HIGH |
+| Dynamic code evaluation (`eval` / `exec` / `new Function`) | code-injection | HIGH |
+
+It won't flag the *correct* fix (e.g. an argv array, or a `startswith(root + os.sep)` boundary) —
+keeping false positives low is a design goal.
+
 ## Tests
 ```bash
-python -m unittest discover -s tests -v   # 12 offline tests
+python -m unittest discover -s tests -v   # 33 offline tests (config + source)
 ```
 
 ## Limitations (scope honesty)
@@ -68,10 +91,12 @@ python -m unittest discover -s tests -v   # 12 offline tests
 - Covers the common `mcpServers` config shape; richer manifest formats are on the roadmap.
 
 ## Roadmap
+- [x] **Source-code scanning** (`scan-source`): command injection, path/sandbox escape, SSRF,
+      token passthrough, eval — codified from real MCP-server findings *(v0.2)*
+- [ ] CI GitHub Action (fail the build on CRITICAL/HIGH) — the paid-tier hook
 - [ ] Live (authorized) MCP server probing: enumerate tools, check input validation
 - [ ] Canary-based prompt-injection test against a running agent (reuse prompt-injection-harness)
-- [ ] More config formats + policy baselines
-- [ ] CI GitHub Action
+- [ ] More config formats + policy baselines + HTML report for source scans
 
 ## Ethics
 Analyze only configs and servers you own or are explicitly authorized to assess. The sample
