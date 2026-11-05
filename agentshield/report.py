@@ -12,12 +12,13 @@ _RATING_COLOR = {"CRITICAL": "#b31412", "HIGH": "#d93025", "MEDIUM": "#e37400",
                  "LOW": "#1a73e8", "CLEAN": "#188038"}
 
 
-def to_text(report: Report, target: str = "") -> str:
+def to_text(report: Report, target: str = "", title: str = "MCP Config Security Report",
+            unit: str = "Servers") -> str:
     lines = [
-        "AgentShield — MCP Config Security Report",
+        f"AgentShield — {title}",
         f"Target: {target}" if target else "",
         f"Risk score: {report.risk_score}/100  ({report.rating})",
-        f"Servers analyzed: {report.servers_analyzed} | "
+        f"{unit} analyzed: {report.servers_analyzed} | "
         f"Confirmed: {len(report.confirmed)} | Indicators (need review): {len(report.indicators)}",
         "-" * 64,
     ]
