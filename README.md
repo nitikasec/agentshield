@@ -13,6 +13,8 @@ Built by Nitika Kumari (offensive security · AI/LLM & MCP security). Companion 
 [Agent Heist](https://github.com/nitikasec/agent-heist) lab and
 [prompt-injection-harness](https://github.com/nitikasec/prompt-injection-harness).
 
+![AgentShield scanning a vulnerable MCP config, flagging a hardcoded key, a / mount and tool-poisoning](docs/agentshield-demo.gif)
+
 ## Why
 MCP wires LLM agents to tools, files, and remote servers — a real, under-reviewed attack
 surface (leaked keys in configs, `/`-mounted filesystems, plaintext endpoints, poisoned
